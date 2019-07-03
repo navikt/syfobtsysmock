@@ -1,0 +1,34 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: Application
+metadata:
+  name: syfobtsysmock
+  namespace: default
+  labels:
+    team: "teamsykefravr"
+spec:
+  name: "syfobtsysmock"
+  image: "repo.adeo.no:5443/syfo/syfobtsysmock:@@VERSION@@"
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 90
+  port: 8080
+  liveness:
+    path: /isAlive
+    initialDelay: 10
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 3
+  readiness:
+    path: /isReady
+    initialDelay: 5
+    timeout: 1
+    periodSeconds: 10
+  resources:
+    limits:
+      cpu: 700m
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
